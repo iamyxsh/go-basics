@@ -3,8 +3,10 @@ package main
 import (
 	"fmt" //importing a package to print statements
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 type deck []string // declaring decks that extends the property of slice of type strings
@@ -55,4 +57,16 @@ func readFromFile(fileName string) string {
 	 }
 
 	 return string(d)
+}
+
+
+func (d deck) shuffle() {
+	source := rand.NewSource(time.Now().UnixNano())  //making a new rand with timestamp as a seed
+	r:= rand.New(source)
+
+	for i := range d{
+		newPosition := r.Intn(len(d) - 1)
+
+		d[i], d[newPosition] = d[newPosition], d[i] // replacing positions
+	}
 }
